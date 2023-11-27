@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('administrator.dashboard');
-});
+
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::post('/user', [UserController::class, 'save'])->name('user.save');
+Route::get('/user-display', [UserController::class, 'display'])->name('user.display');
+Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/user', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user', [UserController::class, 'delete'])->name('user.delete');
+
+
 
 Auth::routes();
 
