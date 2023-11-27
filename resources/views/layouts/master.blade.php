@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- PAGE TITLE HERE -->
 	<title>Learning Portal</title>
@@ -1239,28 +1240,21 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
     <script src="{{ asset('assets/vendor/global/global.min.js') }}"></script>
 	<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 	<script src="{{ asset('assets/js/deznav-init.js') }}"></script>
 	<script src="{{ asset('assets/js/demo.js') }}"></script>
     <script src="{{ asset('assets/js/styleSwitcher.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @yield('user')
 
 
-    <!-- code-highlight -->
-	<script src="{{ asset('/js/highlight.min.js') }}"></script>
-	<script>hljs.highlightAll();
-	hljs.configure({ ignoreUnescapedHTML: true })
 
-	</script>
 
-	<script>
-		document.addEventListener('DOMContentLoaded', (event) => {
-			document.querySelectorAll('pre code').forEach((el) => {
-				hljs.highlightElement(el);
-			});
-			});
-	</script>
 
 
 
