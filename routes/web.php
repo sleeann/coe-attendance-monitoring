@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,13 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
+
+Route::get('/announcement', [AnnouncementController::class, 'index'])->name('announcement.index');
+Route::post('/announcement', [AnnouncementController::class, 'save'])->name('announcement.save');
+Route::get('/announcement-display', [AnnouncementController::class, 'display'])->name('announcement.display');
+Route::get('/announcement-edit/{id}', [AnnouncementController::class, 'edit'])->name('announcement.edit');
+Route::put('/announcement', [AnnouncementController::class, 'update'])->name('announcement.update');
+Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('announcement.delete');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 

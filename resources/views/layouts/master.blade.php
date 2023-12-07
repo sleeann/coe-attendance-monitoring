@@ -936,6 +936,19 @@
                         </button>
 					</li>
 
+                    <li>
+                        <button style="border: none; background: none;" onclick="redirect('{{ route('announcement.index') }}')">
+                            <a aria-expanded="false">
+                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
+                                    <div>
+                                        <i class="fa-solid fa-house"></i>
+                                    </div>
+                                    <span class="nav-text" style="{{ Request::is('announcement') ? 'color: rgb(248, 185, 64);' : '' }}">Announcement</span>
+                                </div>
+						    </a>
+                        </button>
+					</li>
+
 
                     <li>
                         <button style="border: none; background: none;">

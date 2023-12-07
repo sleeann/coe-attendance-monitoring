@@ -169,10 +169,7 @@
 
 @section('user')
     <script>
-        // added an input mask
-        document.addEventListener("DOMContentLoaded", function() {
-            Inputmask("99-AA-9999").mask(".id_number");
-        });
+       
 
         // for clearing error messages
         const clearErrorMessages = () => {
