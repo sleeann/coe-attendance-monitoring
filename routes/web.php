@@ -28,10 +28,12 @@ Route::get('/announcement', [AnnouncementController::class, 'index'])->name('ann
 Route::post('/announcement', [AnnouncementController::class, 'save'])->name('announcement.save');
 Route::get('/announcement-display', [AnnouncementController::class, 'display'])->name('announcement.display');
 Route::get('/announcement-edit/{id}', [AnnouncementController::class, 'edit'])->name('announcement.edit');
-Route::put('/announcement', [AnnouncementController::class, 'update'])->name('announcement.update');
+Route::post('/announcement-update', [AnnouncementController::class, 'update'])->name('announcement.update');
 Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('announcement.delete');
 
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard-display', [DashboardController::class, 'display'])->name('dashboard.display');
 
 
 Route::get('/user', [UserController::class, 'index'])->name('user.index');

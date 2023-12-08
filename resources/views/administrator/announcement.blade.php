@@ -50,9 +50,12 @@
                                                    <label class="form-check-label" for="checkAll"></label>
                                                 </div>
                                              </th>
+                                             <th><strong>Title</strong></th>
                                              <th><strong>Announcement</strong></th>
                                              <th><strong>Date</strong></th>
-                                             <th><strong>Status</strong></th>
+                                             <th><strong>Time</strong></th>
+                                             <th><strong>Image</strong></th>
+                                             <th><strong>Actions</strong></th>
                                              <th><strong></strong></th>
                                           </tr>
                                        </thead>

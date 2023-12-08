@@ -17,6 +17,16 @@
                                 <form class="form-valide-with-icon needs-validation" novalidate>
                                 <input type="text" id="edit_id" hidden>
                                     <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Title</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="edit_title" required>
+                                            <div class="invalid-feedback">
+                                                Title
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="edit_error_title"></span>
+                                    </div>
+                                    <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Announcement</label>
                                         <div class="input-group">
                                             <textarea id="edit_announcement" cols="30" rows="5" class="form-control"></textarea>
@@ -29,12 +39,33 @@
                                     <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Date</label>
                                         <div class="input-group">
-                                            <input type="datetime-local" class="form-control" id="edit_date" placeholder="date" required>
+                                            <input type="date" class="form-control" id="edit_date" placeholder="date" required>
                                             <div class="invalid-feedback">
                                                 date
                                             </div>
                                         </div>
                                         <span style="color: red" id="edit_error_date"></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Time</label>
+                                        <div class="input-group">
+                                            <input type="time" class="form-control" id="edit_time" placeholder="date" required>
+                                            <div class="invalid-feedback">
+                                                Time
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="edit_error_time"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Image</label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="edit_image" required>
+                                            <div class="invalid-feedback">
+                                                Image
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="edit_error_image"></span>
                                     </div>
                                 </form>
                             </div>
@@ -71,6 +102,16 @@
                             <div class="basic-form">
                                 <form class="form-valide-with-icon needs-validation" novalidate>
                                     <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Title</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="title" required>
+                                            <div class="invalid-feedback">
+                                                Title
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="error_title"></span>
+                                    </div>
+                                    <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Announcement</label>
                                         <div class="input-group">
                                             <textarea id="announcement" cols="30" rows="5" class="form-control"></textarea>
@@ -83,12 +124,32 @@
                                     <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Date</label>
                                         <div class="input-group">
-                                            <input type="datetime-local" class="form-control" id="date" placeholder="date" required>
+                                            <input type="date" class="form-control" id="date" placeholder="date" required>
                                             <div class="invalid-feedback">
                                                 date
                                             </div>
                                         </div>
                                         <span style="color: red" id="error_date"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Time</label>
+                                        <div class="input-group">
+                                            <input type="time" class="form-control" id="time" placeholder="time" required>
+                                            <div class="invalid-feedback">
+                                                Time
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="error_time"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="text-label form-label" for="validationCustomUsername">Image</label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="image" required>
+                                            <div class="invalid-feedback">
+                                                Image
+                                            </div>
+                                        </div>
+                                        <span style="color: red" id="error_image"></span>
                                     </div>
                                 </form>
                             </div>
@@ -109,51 +170,80 @@
 
         // for clearing error messages
         const clearErrorMessages = () => {
+            $('#error_title').html('')
             $('#error_announcement').html('')
             $('#error_date').html('')
+            $('#error_time').html('')
+            $('#error_image').html('')
         }
         // for clearing inputs
         const clearInput = () => {
+            $('#title').val(''),
             $('#announcement').val(''),
             $('#date').val(''),
+            $('#time').val(''),
+            $('#image').val(''),
+
+            $('#edit_title').val(''),
             $('#edit_announcement').val(''),
-            $('#edit_date').val('')
+            $('#edit_date').val(''),
+            $('#edit_time').val(''),
+            $('#edit_image').val('')
         }
+
 
         // saving announcement
         $('#saveAnnouncement').click(function() {
-            clearErrorMessages()
-            var postData = {
-                announcement: $('#announcement').val(),
-                date: $('#date').val(),
-            };
+            var formData = new FormData();
+            let title = $('#title').val();
+            let announcement = $('#announcement').val();
+            let date = $('#date').val();
+            let time = $('#time').val();
+            let image = $('#image').prop('files')[0];
+
+            formData.append('title', title);
+            formData.append('announcement', announcement);
+            formData.append('date', date);
+            formData.append('time', time);
+            formData.append('image', image);
+
+            clearErrorMessages();
+
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: '{{ route('announcement.save') }}',
                 type: 'POST',
-                data: postData,
+                data: formData,
+                processData: false,
+                contentType: false,
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
                 success: function(response) {
                     if(response.success) {
-                        clearInput()
+                        clearInput();
                         $('#success_alert').css('display', 'block');
                         setTimeout(function() {
                             $('#success_alert').css('display', 'none');
                         }, 2000);
                         $('.announcement_modal').modal('hide');
-                        $("#datatable").html('')
-                        displayUser()
+                        $("#datatable").html('');
+                        displayUser();
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('Request failed:', error);
-                    $('#error_announcement').html(xhr.responseJSON.errors.announcement)
-                    $('#error_date').html(xhr.responseJSON.errors.date)
+                    if(xhr.responseJSON && xhr.responseJSON.errors) {
+                        $('#error_title').html(xhr.responseJSON.errors.title);
+                        $('#error_announcement').html(xhr.responseJSON.errors.announcement);
+                        $('#error_date').html(xhr.responseJSON.errors.date);
+                        $('#error_time').html(xhr.responseJSON.errors.time);
+                        $('#error_image').html(xhr.responseJSON.errors.image);
+                    }
                 }
             });
         });
+
 
         // display list of users
         const displayUser = () => {
@@ -172,8 +262,13 @@
                                     <label class="form-check-label" for="customCheckBox${announcement.id}"></label>
                                 </div>
                             </td>
+                            <td><strong>${announcement.title}</strong></td>
                             <td><strong>${announcement.announcement}</strong></td>
-                            <td>${announcement.date}</td>
+                            <td><strong>${announcement.date}</strong></td>
+                            <td><strong>${announcement.time}</strong></td>
+                            <td>
+                                <img src = '{{ asset('storage/gallery/${announcement.image}') }}' width='50px' height='50px'>
+                            </td>
                             <td>
                                 <div class="d-flex">
                                     <button style="border: none;" value="${announcement.id}" class="edit_btn" onclick="edit(${announcement.id})">
@@ -207,8 +302,11 @@
                 dataType: 'json',
                 success: function(response) {
                     console.log(response)
+                    $('#edit_title').val(response.title)
                     $('#edit_announcement').val(response.announcement)
                     $('#edit_date').val(response.date)
+                    $('#edit_time').val(response.time)
+                    // $('#edit_image').prop('value', response.image);
                     $('#edit_id').val(response.id)
                 },
                 error: function(error) {
@@ -221,16 +319,31 @@
         // update user
         $('#updateAnnouncement').click(function() {
             clearErrorMessages()
-            var postData = {
-                id: $('#edit_id').val(),
-                announcement: $('#edit_announcement').val(),
-                date: $('#edit_date').val()
-            };
+
+            var formData = new FormData();
+            let id = $('#edit_id').val();
+            let title = $('#edit_title').val();
+            let announcement = $('#edit_announcement').val();
+            let date = $('#edit_date').val();
+            let time = $('#edit_time').val();
+            let image = $('#edit_image').prop('files')[0];
+
+            formData.append('id', id);
+            formData.append('title', title);
+            formData.append('announcement', announcement);
+            formData.append('date', date);
+            formData.append('time', time);
+            formData.append('image', image);
+
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 url: '{{ route('announcement.update') }}',
-                type: 'PUT',
-                data: postData,
+                type: 'POST',
+                contentType: 'multipart/form-data',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },

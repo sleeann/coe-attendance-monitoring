@@ -22,8 +22,11 @@ class AnnouncementRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'title' => 'required',
             'announcement' => 'required',
-            'date' => 'required'
+            'date' => 'required',
+            'time' => 'required',
+            'image' => 'required'
         ];
     }
 }
