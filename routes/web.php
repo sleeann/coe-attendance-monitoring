@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\ParentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,12 @@ use App\Http\Controllers\AnnouncementController;
 |
 */
 
+// PARENTS ROUTES
+Route::get('/', [ParentsController::class, 'home']);
+Route::get('/parent/home', [ParentsController::class, 'home'])->name('parent.home');
+Route::get('/parent/announcements', [ParentsController::class, 'announcements'])->name('parent.announcements');
+Route::get('/parent/attendance', [ParentsController::class, 'attendance'])->name('parent.attendance');
+Route::get('/parent/grades&score', [ParentsController::class, 'grades_score'])->name('parent.grades_score');
 
 Route::get('/announcement', [AnnouncementController::class, 'index'])->name('announcement.index');
 Route::post('/announcement', [AnnouncementController::class, 'save'])->name('announcement.save');
