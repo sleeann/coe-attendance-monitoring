@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Announcement extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'announcement', 'date', 'time', 'image'];
+    protected $fillable = ['title', 'announcement', 'date', 'image'];
 
-    
+
 }

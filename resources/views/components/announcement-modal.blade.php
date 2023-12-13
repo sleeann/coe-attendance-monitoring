@@ -46,17 +46,6 @@
                                         </div>
                                         <span style="color: red" id="edit_error_date"></span>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label class="text-label form-label" for="validationCustomUsername">Time</label>
-                                        <div class="input-group">
-                                            <input type="time" class="form-control" id="edit_time" placeholder="date" required>
-                                            <div class="invalid-feedback">
-                                                Time
-                                            </div>
-                                        </div>
-                                        <span style="color: red" id="edit_error_time"></span>
-                                    </div>
                                     <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Image</label>
                                         <div class="input-group">
@@ -132,16 +121,6 @@
                                         <span style="color: red" id="error_date"></span>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="text-label form-label" for="validationCustomUsername">Time</label>
-                                        <div class="input-group">
-                                            <input type="time" class="form-control" id="time" placeholder="time" required>
-                                            <div class="invalid-feedback">
-                                                Time
-                                            </div>
-                                        </div>
-                                        <span style="color: red" id="error_time"></span>
-                                    </div>
-                                    <div class="mb-3">
                                         <label class="text-label form-label" for="validationCustomUsername">Image</label>
                                         <div class="input-group">
                                             <input type="file" class="form-control" id="image" required>
@@ -173,7 +152,6 @@
             $('#error_title').html('')
             $('#error_announcement').html('')
             $('#error_date').html('')
-            $('#error_time').html('')
             $('#error_image').html('')
         }
         // for clearing inputs
@@ -181,13 +159,11 @@
             $('#title').val(''),
             $('#announcement').val(''),
             $('#date').val(''),
-            $('#time').val(''),
             $('#image').val(''),
 
             $('#edit_title').val(''),
             $('#edit_announcement').val(''),
             $('#edit_date').val(''),
-            $('#edit_time').val(''),
             $('#edit_image').val('')
         }
 
@@ -198,13 +174,11 @@
             let title = $('#title').val();
             let announcement = $('#announcement').val();
             let date = $('#date').val();
-            let time = $('#time').val();
             let image = $('#image').prop('files')[0];
 
             formData.append('title', title);
             formData.append('announcement', announcement);
             formData.append('date', date);
-            formData.append('time', time);
             formData.append('image', image);
 
             clearErrorMessages();
@@ -237,7 +211,6 @@
                         $('#error_title').html(xhr.responseJSON.errors.title);
                         $('#error_announcement').html(xhr.responseJSON.errors.announcement);
                         $('#error_date').html(xhr.responseJSON.errors.date);
-                        $('#error_time').html(xhr.responseJSON.errors.time);
                         $('#error_image').html(xhr.responseJSON.errors.image);
                     }
                 }
@@ -265,7 +238,6 @@
                             <td><strong>${announcement.title}</strong></td>
                             <td><strong>${announcement.announcement}</strong></td>
                             <td><strong>${announcement.date}</strong></td>
-                            <td><strong>${announcement.time}</strong></td>
                             <td>
                                 <img src = '{{ asset('storage/gallery/${announcement.image}') }}' width='50px' height='50px'>
                             </td>
@@ -305,7 +277,6 @@
                     $('#edit_title').val(response.title)
                     $('#edit_announcement').val(response.announcement)
                     $('#edit_date').val(response.date)
-                    $('#edit_time').val(response.time)
                     // $('#edit_image').prop('value', response.image);
                     $('#edit_id').val(response.id)
                 },
@@ -325,14 +296,12 @@
             let title = $('#edit_title').val();
             let announcement = $('#edit_announcement').val();
             let date = $('#edit_date').val();
-            let time = $('#edit_time').val();
             let image = $('#edit_image').prop('files')[0];
 
             formData.append('id', id);
             formData.append('title', title);
             formData.append('announcement', announcement);
             formData.append('date', date);
-            formData.append('time', time);
             formData.append('image', image);
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');

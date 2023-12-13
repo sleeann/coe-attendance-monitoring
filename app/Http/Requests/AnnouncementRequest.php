@@ -25,7 +25,6 @@ class AnnouncementRequest extends FormRequest
             'title' => 'required',
             'announcement' => 'required',
             'date' => 'required',
-            'time' => 'required',
             'image' => 'required'
         ];
     }

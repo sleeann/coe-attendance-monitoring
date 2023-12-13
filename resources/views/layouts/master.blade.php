@@ -1018,16 +1018,17 @@
 					</li>
 
                      <li>
-                        <button style="border: none; background: none;">
+                        <form style="border: none; background: none;" action="{{ route('logout') }}" method="POST">
+                            @csrf
                             <a aria-expanded="false">
                                 <div style="display: flex; gap: 1rem; margin-left: .3rem;">
                                     <div>
                                         <i class="fa-solid fa-right-from-bracket"></i>
                                     </div>
-                                    <span class="nav-text">Logout</span>
+                                    <button type="submit" class="nav-text" style="background: none; border: none; color: white;">Logout</button>
                                 </div>
 						    </a>
-                        </button>
+                        </form>
 					</li>
 				</ul>
 			</div>

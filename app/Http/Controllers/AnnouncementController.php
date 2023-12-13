@@ -38,7 +38,6 @@ class AnnouncementController extends Controller
             'title' => $request->title,
             'announcement' => $request->announcement,
             'date' => $request->date,
-            'time' => $request->time,
             'image' => $imageName
         ]);
         return response()->json(['message' => 'Announcement Added Successfully', 'success' => true]);
@@ -58,7 +57,6 @@ class AnnouncementController extends Controller
             'title' => $request->title,
             'announcement' => $request->announcement,
             'date' => $request->date,
-            'time' => $request->time,
             'image' => $imageName
         ];
 
@@ -71,7 +69,6 @@ class AnnouncementController extends Controller
         $announcement->title = $data['title'];
         $announcement->announcement = $data['announcement'];
         $announcement->date = $data['date'];
-        $announcement->time = $data['time'];
         $announcement->save();
         return response()->json(['message' => 'Announcement Updated Successfully', 'success' => true]);
     }

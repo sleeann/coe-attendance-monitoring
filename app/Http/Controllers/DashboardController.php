@@ -9,33 +9,19 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('administrator.dashboard');
-    }
+        $announcements = Announcement::all();
+        $currentDate = Carbon::now();
+        $allAnnouncement = [];
 
+        foreach ($announcements as $announcement) {
+            $announcementDate = Carbon::parse($announcement->date);
 
-    public function display()
-    {
-        $announcement = Announcement::select('date', 'time')->first();
-
-        // Convert date and time columns to Carbon objects separately
-        $formattedDate = Carbon::createFromFormat('Y-m-d', $announcement['date']);
-        $formattedTime = Carbon::createFromFormat('H:i', $announcement->time)->format('g:i A');
-        // Combine date and time to create a single Carbon datetime object
-        $formattedDateTime = $formattedDate->setTimeFromTimeString($formattedTime);
-        $currentDateTime = Carbon::now();
-
-        if ($formattedDateTime->isPast()) {
-            echo $formattedDateTime;
-        } else {
-            echo $formattedDateTime;
+            if ($announcementDate->isFuture() || $announcementDate->isToday()) {
+                $allAnnouncement[] = $announcement;
+            }
         }
+        return view('administrator.dashboard', compact('allAnnouncement'));
     }
-
-
-
-// 2017-11-01 16:29:27
-
-
 
 
 }

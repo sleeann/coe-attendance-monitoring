@@ -18,11 +18,13 @@ use App\Http\Controllers\ParentsController;
 */
 
 // PARENTS ROUTES
-Route::get('/', [ParentsController::class, 'home']);
+// Route::middleware(['auth'])->group(function () {
+Route::get('/parent', [ParentsController::class, 'home']);
 Route::get('/parent/home', [ParentsController::class, 'home'])->name('parent.home');
 Route::get('/parent/announcements', [ParentsController::class, 'announcements'])->name('parent.announcements');
 Route::get('/parent/attendance', [ParentsController::class, 'attendance'])->name('parent.attendance');
 Route::get('/parent/grades&score', [ParentsController::class, 'grades_score'])->name('parent.grades_score');
+
 
 Route::get('/announcement', [AnnouncementController::class, 'index'])->name('announcement.index');
 Route::post('/announcement', [AnnouncementController::class, 'save'])->name('announcement.save');
@@ -42,9 +44,9 @@ Route::get('/user-display', [UserController::class, 'display'])->name('user.disp
 Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/user', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user', [UserController::class, 'delete'])->name('user.delete');
-
+// });
 
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
