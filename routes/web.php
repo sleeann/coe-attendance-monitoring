@@ -19,6 +19,7 @@ use App\Http\Controllers\ParentsController;
 
 // PARENTS ROUTES
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [ParentsController::class, 'home']);
     Route::get('/parent', [ParentsController::class, 'home']);
     Route::get('/parent/home', [ParentsController::class, 'home'])->name('parent.home');
     Route::get('/parent/announcements', [ParentsController::class, 'announcements'])->name('parent.announcements');
@@ -44,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user', [UserController::class, 'delete'])->name('user.delete');
+
+    // LOGOUT
+    
+    Route::get('/logout', function(){ Auth::logout(); return redirect('/');})->name('logout');
 });
 
 

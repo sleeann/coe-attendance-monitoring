@@ -1004,7 +1004,7 @@
 
                      <li>
                         <button style="border: none; background: none;">
-                            <a aria-expanded="false">
+                            <a href="{{route('logout')}}" aria-expanded="false">
                                 <div style="display: flex; gap: 1rem; margin-left: .3rem;">
                                     <div>
                                         <i class="fa-solid fa-right-from-bracket"></i>
