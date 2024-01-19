@@ -923,113 +923,32 @@
 		<div class="deznav">
             <div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
-					<li>
-                        <button style="border: none; background: none;" onclick="redirect('{{ route('dashboard.index') }}')">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-house"></i>
-                                    </div>
-                                    <span class="nav-text" style="{{ Request::is('dashboard') ? 'color: rgb(248, 185, 64);' : '' }}">Dashboard</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
 
-                    <li>
-                        <button style="border: none; background: none;" onclick="redirect('{{ route('announcement.index') }}')">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-house"></i>
-                                    </div>
-                                    <span class="nav-text" style="{{ Request::is('announcement') ? 'color: rgb(248, 185, 64);' : '' }}">Announcement</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
+				@role('Instructor')
+					@include('components.instructor-tab')
+				@endrole
 
+				@role('Administrator')
+					@include('components.admin-tab')
+				@endrole
 
-                    <li>
-                        <button style="border: none; background: none;">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-person-chalkboard"></i>
-                                    </div>
-                                    <span class="nav-text">Instructors</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
+				@role('Parent')
+					@include('components.parent-tab')
+				@endrole
+				<li>
+					<form style="border: none; background: none;" action="{{ route('user.logout') }}" method="POST">
+						@csrf
+						<a aria-expanded="false">
+							<div style="display: flex; gap: 1rem; margin-left: .3rem;">
+								<div>
+									<i class="fa-solid fa-right-from-bracket"></i>
+								</div>
+								<button type="submit" class="nav-text" style="background: none; border: none; color: white;">Logout</button>
+							</div>
+						</a>
+					</form>
+				</li>
 
-
-
-                    <li>
-                        <button style="border: none; background: none;">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-book"></i>
-                                    </div>
-                                    <span class="nav-text">Subjects</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
-
-                    <li>
-                        <button style="border: none; background: none;">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-users"></i>
-                                    </div>
-                                    <span class="nav-text">Students</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
-
-                    <li>
-                        <button style="border: none; background: none;" onclick="redirect('{{ route('user.index') }}')">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-user-plus"></i>
-                                    </div>
-                                    <span class="nav-text" style="{{ Request::is('user') ? 'color: rgb(248, 185, 64);' : '' }}">Create Account</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
-
-                    <li>
-                        <button style="border: none; background: none;">
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-gear"></i>
-                                    </div>
-                                    <span class="nav-text">Settings</span>
-                                </div>
-						    </a>
-                        </button>
-					</li>
-
-                     <li>
-                        <form style="border: none; background: none;" action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <a aria-expanded="false">
-                                <div style="display: flex; gap: 1rem; margin-left: .3rem;">
-                                    <div>
-                                        <i class="fa-solid fa-right-from-bracket"></i>
-                                    </div>
-                                    <button type="submit" class="nav-text" style="background: none; border: none; color: white;">Logout</button>
-                                </div>
-						    </a>
-                        </form>
-					</li>
 				</ul>
 			</div>
         </div>

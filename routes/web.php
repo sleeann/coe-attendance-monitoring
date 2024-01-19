@@ -5,6 +5,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ParentsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\GradesAndScoresController;
+use App\Http\Controllers\DisplayAnnouncementController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,41 +22,39 @@ use App\Http\Controllers\ParentsController;
 |
 */
 
-// PARENTS ROUTES
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [ParentsController::class, 'home']);
-    Route::get('/parent', [ParentsController::class, 'home']);
-    Route::get('/parent/home', [ParentsController::class, 'home'])->name('parent.home');
-    Route::get('/parent/announcements', [ParentsController::class, 'announcements'])->name('parent.announcements');
-    Route::get('/parent/attendance', [ParentsController::class, 'attendance'])->name('parent.attendance');
-    Route::get('/parent/grades&score', [ParentsController::class, 'grades_score'])->name('parent.grades_score');
 
+    Route::post('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home.index');
 
-    Route::get('/announcement', [AnnouncementController::class, 'index'])->name('announcement.index');
-    Route::post('/announcement', [AnnouncementController::class, 'save'])->name('announcement.save');
-    Route::get('/announcement-display', [AnnouncementController::class, 'display'])->name('announcement.display');
-    Route::get('/announcement-edit/{id}', [AnnouncementController::class, 'edit'])->name('announcement.edit');
-    Route::post('/announcement-update', [AnnouncementController::class, 'update'])->name('announcement.update');
-    Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('announcement.delete');
+    Route::middleware(['role:Instructor'])->prefix('instructor')->group(function () {
+        Route::get('/announcement', [AnnouncementController::class, 'index'])->name('instructor.announcement.index');
+        Route::post('/announcement', [AnnouncementController::class, 'save'])->name('instructor.announcement.save');
+        Route::get('/announcement-display', [AnnouncementController::class, 'display'])->name('instructor.announcement.display');
+        Route::get('/announcement-edit/{id}', [AnnouncementController::class, 'edit'])->name('instructor.announcement.edit');
+        Route::post('/announcement-update', [AnnouncementController::class, 'update'])->name('instructor.announcement.update');
+        Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('instructor.announcement.delete');
+        Route::get('/attendance', [AttendanceController::class, 'index'])->name('instructor.attendance.index');
+        Route::get('/grades&scores', [GradesAndScoresController::class, 'index'])->name('instructor.grades_scores.index');
+    });
 
+    Route::middleware(['role:Parent'])->prefix('parent')->group(function () {
+        Route::get('/attendance', [AttendanceController::class, 'index'])->name('parent.attendance.index');
+        Route::get('/announcement', [DisplayAnnouncementController::class, 'index'])->name('parent.announcement.index');
+        Route::get('/grades&scores', [GradesAndScoresController::class, 'index'])->name('parent.grades_scores.index');
+    });
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/dashboard-display', [DashboardController::class, 'display'])->name('dashboard.display');
+    Route::middleware(['role:Administrator'])->prefix('administrator')->group(function () {
+        Route::get('/dashboard-display', [DashboardController::class, 'display'])->name('administrator.dashboard.display');
+        Route::post('/user', [UserController::class, 'save'])->name('administrator.user.save');
+        Route::get('/user-display', [UserController::class, 'display'])->name('administrator.user.display');
+        Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('administrator.user.edit');
+        Route::put('/user', [UserController::class, 'update'])->name('administrator.user.update');
+        Route::delete('/user', [UserController::class, 'delete'])->name('administrator.user.delete');
+        Route::get('/user', [UserController::class, 'index'])->name('administrator.user.index'); 
+    });
 
-
-    Route::get('/user', [UserController::class, 'index'])->name('user.index');
-    Route::post('/user', [UserController::class, 'save'])->name('user.save');
-    Route::get('/user-display', [UserController::class, 'display'])->name('user.display');
-    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/user', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/user', [UserController::class, 'delete'])->name('user.delete');
-
-    // LOGOUT
-    
-    Route::get('/logout', function(){ Auth::logout(); return redirect('/');})->name('logout');
 });
 
 
-Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['register' => false]);

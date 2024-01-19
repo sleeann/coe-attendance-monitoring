@@ -1,6 +1,3 @@
-@extends('layouts.parent')
-@section('title', 'Profile')
-@section('content')
 <div class="content-body">
    <div class="container-fluid">
         <div class="profile">
@@ -57,5 +54,3 @@
         </div>
     </div>
 </div>
-@endsection
-

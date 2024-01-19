@@ -18,6 +18,6 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin',
             'password' => Hash::make('admin')
-        ]);
+        ])->assignRole('Administrator');
     }
 }

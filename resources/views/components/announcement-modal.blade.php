@@ -185,7 +185,7 @@
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '{{ route('announcement.save') }}',
+                url: '{{ route('instructor.announcement.save') }}',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -202,7 +202,7 @@
                         }, 2000);
                         $('.announcement_modal').modal('hide');
                         $("#datatable").html('');
-                        displayUser();
+                        displayAnnouncement();
                     }
                 },
                 error: function(xhr, status, error) {
@@ -218,10 +218,10 @@
         });
 
 
-        // display list of users
-        const displayUser = () => {
+        // display list of announcement
+        const displayAnnouncement = () => {
             $.ajax({
-                url: '/announcement-display',
+                url: '{{ route('instructor.announcement.display') }}',
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
@@ -262,14 +262,14 @@
             });
         };
 
-        displayUser()
+        displayAnnouncement()
 
 
         // edit announcement
         const edit = (id) =>{
             $('.edit_announcement_modal').modal('show');
             $.ajax({
-                url: '/announcement-edit/' + id,
+                url: '/instructor/announcement-edit/' + id,
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
@@ -306,7 +306,7 @@
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '{{ route('announcement.update') }}',
+                url: '{{ route('instructor.announcement.update') }}',
                 type: 'POST',
                 contentType: 'multipart/form-data',
                 cache: false,
@@ -326,7 +326,7 @@
                         }, 2000);
                         $('.edit_announcement_modal').modal('hide');
                         $("#datatable").html('')
-                        displayUser()
+                        displayAnnouncement()
                     }
                 },
                 error: function(xhr, status, error) {
@@ -352,7 +352,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '{{ route('announcement.delete') }}',
+                        url: '{{ route('instructor.announcement.delete') }}',
                         type: 'DELETE',
                         data: { id: id },
                         headers: {
@@ -362,7 +362,7 @@
                             console.log(response)
                             if(response.success) {
                                  $("#datatable").html('')
-                                 displayUser()
+                                 displayAnnouncement()
                             }
                         },
                         error: function(xhr, status, error) {
