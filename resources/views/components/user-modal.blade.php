@@ -205,7 +205,7 @@
             };
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '{{ route('user.save') }}',
+                url: '{{ route('administrator.user.save') }}',
                 type: 'POST',
                 data: postData,
                 headers: {
@@ -237,7 +237,7 @@
         // display list of users
         const displayUser = () => {
             $.ajax({
-                url: '/user-display',
+                url: '/administrator/user-display',
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
@@ -287,7 +287,7 @@
         const edit = (id) =>{
             $('#edit_modal').modal('show');
             $.ajax({
-                url: '/user-edit/' + id,
+                url: '/administrator/user-edit/' + id,
                 method: 'GET',
                 dataType: 'json',
                 success: function(response) {
@@ -315,7 +315,7 @@
             };
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-                url: '{{ route('user.update') }}',
+                url: '{{ route('administrator.user.update') }}',
                 type: 'PUT',
                 data: postData,
                 headers: {
@@ -360,7 +360,7 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '{{ route('user.delete') }}',
+                        url: '{{ route('administrator.user.delete') }}',
                         type: 'DELETE',
                         data: { id: id },
                         headers: {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Announcement;
 use App\Http\Requests\AnnouncementRequest;
 use Storage;
+use Carbon\Carbon;
 
 class AnnouncementController extends Controller
 {
@@ -16,8 +17,19 @@ class AnnouncementController extends Controller
 
     public function display()
     {
-        $announcement = Announcement::all();
-        return response()->json($announcement);
+        $announcements = Announcement::all();
+        $currentDate = Carbon::now();
+        $allAnnouncement = [];
+
+        foreach ($announcements as $announcement) {
+            $announcementDate = Carbon::parse($announcement->date);
+
+            if ($announcementDate->isFuture() || $announcementDate->isToday()) {
+                $allAnnouncement[] = $announcement;
+            }
+        }
+    
+        return response()->json($allAnnouncement);
     }
 
     public function uploadImage($request, $fieldName, $storagePath)

@@ -1,4 +1,4 @@
-@extends('layouts.parent')
+@extends('layouts.master')
 @section('title', 'Attendance')
 @section('content')
 <div class="content-body">
