@@ -21,6 +21,6 @@ class DisplayAnnouncementController extends Controller
                 $allAnnouncement[] = $announcement;
             }
         }
-        return view('administrator.display-announcement', compact('allAnnouncement'));
+        return view('parent.display-announcement', compact('allAnnouncement'));
     }
 }

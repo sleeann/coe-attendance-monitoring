@@ -25,6 +25,7 @@ use App\Http\Controllers\Auth\LoginController;
 Route::middleware(['auth'])->group(function () {
 
     Route::post('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
+    Route::get('/', [DashboardController::class, 'index'])->name('home.index');
     Route::get('/home', [DashboardController::class, 'index'])->name('home.index');
 
     Route::middleware(['role:Instructor'])->prefix('instructor')->group(function () {
@@ -35,7 +36,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/announcement-update', [AnnouncementController::class, 'update'])->name('instructor.announcement.update');
         Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('instructor.announcement.delete');
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('instructor.attendance.index');
-        Route::get('/grades&scores', [GradesAndScoresController::class, 'index'])->name('instructor.grades_scores.index');
+        Route::get('/grades&scores', [GradesAndScoresController::class, 'list'])->name('instructor.grades_scores.list');
     });
 
     Route::middleware(['role:Parent'])->prefix('parent')->group(function () {

@@ -38,7 +38,7 @@
 </li>
 
 <li>
-    <button style="border: none; background: none;" onclick="redirect('{{ route('instructor.grades_scores.index') }}')">
+    <button style="border: none; background: none;" onclick="redirect('{{ route('instructor.grades_scores.list') }}')">
         <a aria-expanded="false">
             <div style="display: flex; gap: 1rem; margin-left: .3rem;">
                 <div>
