@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Grades and Score')
 @section('content')
+@include('components.grades-modal')
 <div class="content-body">
    <div class="container-fluid">
       <div class="text-center" style="background: #e1e7ed; border-radius: 10px; padding: 10px;">
@@ -14,16 +15,23 @@
                            <table class="table table-light table-striped-rows table-hover">
                               <thead>
                                  <tr>
-                                    <th><strong>Quiz #</strong></th>
+                                    <th style="width:50px;">
+                                       <div class="form-check custom-checkbox checkbox-success check-lg me-3">
+                                          <input type="checkbox" class="form-check-input" id="checkAll" required="">
+                                          <label class="form-check-label" for="checkAll"></label>
+                                       </div>
+                                    </th>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Name</strong></th>
-                                    <th><strong>Score</strong></th>
-                                    <th><strong>Total</strong></th>
-                                    <th><strong>%</strong></th>
+                                    <th><strong>Student ID</strong></th>
+                                    <th><strong>Semester</strong></th>
+                                    <th><strong>Term</strong></th>
+                                    <th><strong>Grade</strong></th>
+                                    <th><strong>Remarks</strong></th>
+                                    <th><strong>Actions</strong></th>
                                  </tr>
                               </thead>
-                              <tbody>
-                                 <tr>
+                              <tbody id="datatable">
+                                 <!-- <tr>
                                     <td>1</td>
                                     <td>12/08/2023</td>
                                     <td>Rosette Ventura</td>
@@ -54,7 +62,7 @@
                                     <td>7</td>
                                     <td>10</td>
                                     <td>70%</td>
-                                 </tr>
+                                 </tr> -->
                               </tbody>
                            </table>
                         </div>
@@ -65,7 +73,7 @@
             
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Add Grade Score
                   </button>
                </div>
@@ -73,7 +81,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Grades
                   </button>
                </div>
@@ -81,7 +89,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Download Grades
                   </button>
                </div>
@@ -156,7 +164,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Download Exams
                   </button>
                </div>
@@ -164,7 +172,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Add Exams Score
                   </button>
                </div>
@@ -172,7 +180,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Exams
                   </button>
                </div>
@@ -246,7 +254,7 @@
             
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Add Quiz Score
                   </button>
                </div>
@@ -254,7 +262,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-secondary data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Quiz
                   </button>
                </div>
@@ -262,7 +270,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Download Quiz
                   </button>
                </div>
@@ -338,7 +346,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Add Assignment Score
                   </button>
                </div>
@@ -346,7 +354,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Assignment
                   </button>
                </div>
@@ -354,7 +362,7 @@
             
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Download Assignment
                   </button>
                </div>
@@ -428,7 +436,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Add Seatwork Scores
                   </button>
                </div>
@@ -436,7 +444,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Seatwork
                   </button>
                </div>
@@ -444,7 +452,7 @@
             
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".announcement_modal">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Download Seatwork
                   </button>
                </div>

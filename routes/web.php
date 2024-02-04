@@ -37,6 +37,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('instructor.announcement.delete');
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('instructor.attendance.index');
         Route::get('/grades&scores', [GradesAndScoresController::class, 'list'])->name('instructor.grades_scores.list');
+        Route::post('/grades', [GradesAndScoresController::class, 'save'])->name('instructor.grades.save');
+        Route::get('/grades-display', [GradesAndScoresController::class, 'display'])->name('instructor.grades.display');
+        Route::get('/grades-edit/{id}', [GradesAndScoresController::class, 'edit'])->name('instructor.grades.edit');
+        Route::post('/grades-update', [GradesAndScoresController::class, 'update'])->name('instructor.grades.update');
+        Route::delete('/grades', [GradesAndScoresController::class, 'delete'])->name('instructor.grades.delete');
     });
 
     Route::middleware(['role:Parent'])->prefix('parent')->group(function () {
