@@ -23,6 +23,7 @@
                                     </th>
                                     <th><strong>Date</strong></th>
                                     <th><strong>Student ID</strong></th>
+                                    <th><strong>Student Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Grade</strong></th>
@@ -81,7 +82,7 @@
 
             <div class="col-xl-4  col-lg-4 col-sm-4">
                <div class="widget-stat card">
-                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".grade_modal">
+                  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".upload_grade_modal">
                      <i class="fa-solid fa-add me-2"></i>Upload Grades
                   </button>
                </div>

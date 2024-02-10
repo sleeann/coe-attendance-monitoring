@@ -17,22 +17,22 @@
                                              <div class="personal-details p-1">
                                                 <h4>Personal Information</h4>
                                                    <div class="mx-5">
-                                                      <h5>Name: &nbsp;<span>Lee Ann Sabado</span></h5>
-                                                      <h5>Sex: &nbsp;<span>Female</span></h5>
-                                                      <h5>Email: &nbsp;<span>leeannsabado@gmail.com</span></h5>
-                                                      <h5>Address: &nbsp;<span>Purok 5, Brgy Poblacion, Sto. Tomas, Pangasinan</span></h5>
-                                                      <h5>Contact No: &nbsp;<span>09876543210</span></h5>
-                                                      <h5>Date of Birth: &nbsp;<span>01/01/2000</span></h5>
+                                                   <h5>Name: &nbsp;<span>{{$user->name}}</span></h5>
+                                                      <h5>Sex: &nbsp;<span>{{$user->sex}}</span></h5>
+                                                      <!-- <h5>Email: &nbsp;<span>leeannsabado@gmail.com</span></h5> -->
+                                                      <h5>Address: &nbsp;<span>{{$user->address}}</span></h5>
+                                                      <h5>Contact No: &nbsp;<span>{{$user->contact_number}}</span></h5>
+                                                      <h5>Date of Birth: &nbsp;<span>{{$user->date_of_birth}}</span></h5>
                                                    </div>
                                              </div>
                                              <hr>
                                              <div class="academic-details p-1">
                                                 <h4>Academic Information</h4>
                                                    <div class="mx-5">
-                                                      <h5>Block: &nbsp;<span>A</span></h5>
-                                                      <h5>Year Level: &nbsp;<span>4th Year</span></h5>
-                                                      <h5>Student ID: &nbsp;<span>19-UR-1212</span></h5>
-                                                      <h5>Course: &nbsp;<span>Bachelor of Science in Computer Engineering - Major in System and Network Administration</span></h5>
+                                                      <h5>Block: &nbsp;<span>{{$user->block}}</span></h5>
+                                                      <h5>Year Level: &nbsp;<span>{{$user->year}}</span></h5>
+                                                      <h5>Student ID: &nbsp;<span>{{$user->email}}</span></h5>
+                                                      <h5>Course: &nbsp;<span>{{$user->course}}</span></h5>
                                                    </div>
                                              </div>
                                           </div>

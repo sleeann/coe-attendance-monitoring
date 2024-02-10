@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status');
             $table->timestamps();
 
+            $table->unique(['student_id', 'semester', 'term']);
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

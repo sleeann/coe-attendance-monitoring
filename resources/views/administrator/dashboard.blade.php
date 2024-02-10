@@ -6,7 +6,8 @@
       @include('components.announcement')
    @endrole
    @role('Instructor')
-      @include('components.instructor-home')
+      @include('components.admin-home')
+      @include('components.announcement')
    @endrole
    @role('Parent')
       @include('components.parent-home')

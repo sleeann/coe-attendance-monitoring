@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('instructor.attendance.index');
         Route::get('/grades&scores', [GradesAndScoresController::class, 'list'])->name('instructor.grades_scores.list');
         Route::post('/grades', [GradesAndScoresController::class, 'save'])->name('instructor.grades.save');
+        Route::post('/grades/upload', [GradesAndScoresController::class, 'upload'])->name('instructor.grades.upload');
         Route::get('/grades-display', [GradesAndScoresController::class, 'display'])->name('instructor.grades.display');
         Route::get('/grades-edit/{id}', [GradesAndScoresController::class, 'edit'])->name('instructor.grades.edit');
         Route::post('/grades-update', [GradesAndScoresController::class, 'update'])->name('instructor.grades.update');

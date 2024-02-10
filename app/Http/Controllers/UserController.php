@@ -28,7 +28,15 @@ class UserController extends Controller
         $user = User::create([
             'name' => Str::upper($request->fname.' '.$request->lname),
             'email' => $request->id,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'parent_name' => $request->parent_name,
+            'address' => $request->address,
+            'sex' => $request->sex,
+            'contact_number' => $request->contact_number,
+            'date_of_birth' => $request->date_of_birth,
+            'year' => $request->year,
+            'block' => $request->block,
+            'course' => $request->course
         ]);
         $user->assignRole($request->role);
         return response()->json(['message' => 'User Added Successfully', 'success' => true]);
@@ -48,6 +56,15 @@ class UserController extends Controller
             $user->update([
                 'name' => Str::upper($request->fullname),
                 'email' => $request->id,
+                'password' => Hash::make($request->password),
+                'parent_name' => $request->parent_name,
+                'address' => $request->address,
+                'sex' => $request->sex,
+                'contact_number' => $request->contact_number,
+                'date_of_birth' => $request->date_of_birth,
+                'year' => $request->year,
+                'block' => $request->block,
+                'course' => $request->course,
             ]);
             $user->syncRoles($request->role);
             return response()->json(['message' => 'User Updated Successfully', 'success' => true]);

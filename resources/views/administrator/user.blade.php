@@ -50,10 +50,10 @@
                                                    <label class="form-check-label" for="checkAll"></label>
                                                 </div>
                                              </th>
-                                             <th><strong>ID</strong></th>
+                                             <th><strong>User ID</strong></th>
                                              <th><strong>Name</strong></th>
+                                             <th><strong>Parent Name</strong></th>
                                              <th><strong>Role</strong></th>
-                                             <th><strong>Status</strong></th>
                                              <th><strong></strong></th>
                                           </tr>
                                        </thead>

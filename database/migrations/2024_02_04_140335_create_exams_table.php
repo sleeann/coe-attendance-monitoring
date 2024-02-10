@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('score_in_percent');
             $table->timestamps();
 
+            $table->unique(['student_id', 'semester', 'term']);
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

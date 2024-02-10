@@ -27,6 +27,14 @@ class UserRequest extends FormRequest
             'lname' => 'required',
             'id' => 'required',
             'password' => 'required'
+            // 'parent_name' => 'required',
+            // 'address' => 'required',
+            // 'sex' => 'required',
+            // 'contact_number' => 'required',
+            // 'date_of_birth' => 'required',
+            // 'year' => 'required',
+            // 'block' => 'required',
+            // 'course' => 'required'
         ];
     }
 
