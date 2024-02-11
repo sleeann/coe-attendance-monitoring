@@ -14,12 +14,24 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Auth;
 
 class GradesAndScoresController extends Controller
 {
     public function index()
     {
-        return view('parent.grades_scores');
+        $student_grade = array();
+        $user = Auth::user()->id;
+        $grades = Grades::where('student_id', $user)->get();
+        foreach($grades as $grade){
+            $student_grade[$grade->semester][$grade->term] = $grade;
+        }
+        $exams = Exams::where('student_id', $user)->get();
+        $quizzes = Quiz::where('student_id', $user)->get();
+        $assignments = Assignment::where('student_id', $user)->get();
+        $seatworks = Seatwork::where('student_id', $user)->get();
+
+        return view('parent.grades_scores', compact('student_grade', 'exams', 'quizzes', 'assignments', 'seatworks'));
     }
 
     public function list()
