@@ -37,12 +37,32 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/announcement', [AnnouncementController::class, 'delete'])->name('instructor.announcement.delete');
         Route::get('/attendance', [AttendanceController::class, 'index'])->name('instructor.attendance.index');
         Route::get('/grades&scores', [GradesAndScoresController::class, 'list'])->name('instructor.grades_scores.list');
-        Route::post('/grades', [GradesAndScoresController::class, 'save'])->name('instructor.grades.save');
-        Route::post('/grades/upload', [GradesAndScoresController::class, 'upload'])->name('instructor.grades.upload');
-        Route::get('/grades-display', [GradesAndScoresController::class, 'display'])->name('instructor.grades.display');
-        Route::get('/grades-edit/{id}', [GradesAndScoresController::class, 'edit'])->name('instructor.grades.edit');
-        Route::post('/grades-update', [GradesAndScoresController::class, 'update'])->name('instructor.grades.update');
-        Route::delete('/grades', [GradesAndScoresController::class, 'delete'])->name('instructor.grades.delete');
+        Route::post('/grades', [GradesAndScoresController::class, 'save_grade'])->name('instructor.grades.save');
+        Route::get('/grades-edit/{id}', [GradesAndScoresController::class, 'edit_grade'])->name('instructor.grades.edit');
+        Route::post('/grades-update', [GradesAndScoresController::class, 'update_grade'])->name('instructor.grades.update');
+        Route::delete('/grades', [GradesAndScoresController::class, 'delete_grade'])->name('instructor.grades.delete');
+        Route::get('/grades-display', [GradesAndScoresController::class, 'display_grades'])->name('instructor.grades.display');
+        Route::post('/exams', [GradesAndScoresController::class, 'save_exam'])->name('instructor.exams.save');
+        Route::get('/exams-edit/{id}', [GradesAndScoresController::class, 'edit_exam'])->name('instructor.exams.edit');
+        Route::post('/exams-update', [GradesAndScoresController::class, 'update_exam'])->name('instructor.exams.update');
+        Route::delete('/exams', [GradesAndScoresController::class, 'delete_exam'])->name('instructor.exams.delete');
+        Route::get('/exams-display', [GradesAndScoresController::class, 'display_exams'])->name('instructor.exams.display');
+        Route::post('/quiz', [GradesAndScoresController::class, 'save_quiz'])->name('instructor.quiz.save');
+        Route::get('/quiz-edit/{id}', [GradesAndScoresController::class, 'edit_quiz'])->name('instructor.quiz.edit');
+        Route::post('/quiz-update', [GradesAndScoresController::class, 'update_quiz'])->name('instructor.quiz.update');
+        Route::delete('/quiz', [GradesAndScoresController::class, 'delete_quiz'])->name('instructor.quiz.delete');
+        Route::get('/quizzes-display', [GradesAndScoresController::class, 'display_quizzes'])->name('instructor.quizzes.display');
+        Route::post('/assignment', [GradesAndScoresController::class, 'save_assignment'])->name('instructor.assignment.save');
+        Route::get('/assignment-edit/{id}', [GradesAndScoresController::class, 'edit_assignment'])->name('instructor.assignment.edit');
+        Route::post('/assignment-update', [GradesAndScoresController::class, 'update_assignment'])->name('instructor.assignment.update');
+        Route::delete('/assignment', [GradesAndScoresController::class, 'delete_assignment'])->name('instructor.assignment.delete');
+        Route::get('/assignments-display', [GradesAndScoresController::class, 'display_assignments'])->name('instructor.assignments.display');
+        Route::post('/seatwork', [GradesAndScoresController::class, 'save_seatwork'])->name('instructor.seatwork.save');
+        Route::get('/seatwork-edit/{id}', [GradesAndScoresController::class, 'edit_seatwork'])->name('instructor.seatwork.edit');
+        Route::post('/seatwork-update', [GradesAndScoresController::class, 'update_seatwork'])->name('instructor.seatwork.update');
+        Route::delete('/seatwork', [GradesAndScoresController::class, 'delete_seatwork'])->name('instructor.seatwork.delete');
+        Route::get('/seatworks-display', [GradesAndScoresController::class, 'display_seatworks'])->name('instructor.seatworks.display');
+        Route::post('/grades&score/upload', [GradesAndScoresController::class, 'upload'])->name('instructor.grades_score.upload');
     });
 
     Route::middleware(['role:Parent'])->prefix('parent')->group(function () {

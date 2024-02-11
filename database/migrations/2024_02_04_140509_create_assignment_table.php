@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('assignment', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('student_id')->unsigned();
-            $table->string('assignment_no');
+            $table->integer('assignment_no');
             $table->dateTime('date');
             $table->string('semester');
             $table->string('term');
-            $table->float('score');
+            $table->double('score')->nullable();
             $table->integer('assignment_item');
             $table->string('score_in_percent');
             $table->timestamps();
 
-            $table->unique(['student_id', 'semester', 'term']);
+            $table->unique(['student_id', 'semester', 'term', 'assignment_no']);
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
 
         });

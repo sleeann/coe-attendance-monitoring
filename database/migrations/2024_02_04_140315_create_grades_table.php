@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('semester');
             $table->string('term');
-            $table->float('grade');
+            $table->string('grade')->nullable();
             $table->string('remarks');
             $table->timestamps();
 

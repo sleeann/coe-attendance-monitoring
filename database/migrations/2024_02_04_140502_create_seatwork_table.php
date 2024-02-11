@@ -18,12 +18,12 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('semester');
             $table->string('term');
-            $table->float('score');
+            $table->double('score')->nullable();
             $table->integer('seatwork_item');
             $table->string('score_in_percent');
             $table->timestamps();
 
-            $table->unique(['student_id', 'semester', 'term']);
+            $table->unique(['student_id', 'semester', 'term', 'seatwork_no']);
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

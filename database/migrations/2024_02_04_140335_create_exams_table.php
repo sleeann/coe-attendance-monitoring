@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('semester');
             $table->string('term');
-            $table->float('score');
+            $table->string('score')->nullable();
             $table->integer('exam_item');
             $table->string('score_in_percent');
             $table->timestamps();
