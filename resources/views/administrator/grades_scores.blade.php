@@ -11,13 +11,13 @@
          <div class="row " id="">
             <div class="col-xl-2  col-lg-2 col-sm-2">
                   <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target=".upload_grade_modal">
-                     <i class="fa-solid fa-add me-2"></i>Upload Grades&Scores
+                     <i class="fa-solid fa-upload"></i>Upload Scores
                   </button>
             </div>
 
             <div class="col-xl-2  col-lg-2 col-sm-2">
                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".grade_modal">
-                  <i class="fa-solid fa-add me-2"></i>Grade Score
+                  <i class="fa-solid fa-add me-2"></i>Add Grade
                </button>
             </div>
 
@@ -78,7 +78,7 @@
                                     <th><strong>Actions</strong></th>
                                  </tr>
                               </thead>
-                              <tbody id="grades_datatable">
+                              <tbody id="datatable">
                                  @foreach($grades as $grade)
                                     <tr>
                                        <td>{{$grade['date']}}</td>

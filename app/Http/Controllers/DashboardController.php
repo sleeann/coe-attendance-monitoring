@@ -23,7 +23,15 @@ class DashboardController extends Controller
                 $allAnnouncement[] = $announcement;
             }
         }
-        return view('administrator.dashboard', compact('user', 'allAnnouncement'));
+        $admin = 0;
+        $parent = 0;
+        $instructor = 0;
+        $users = User::with('roles')->get();
+        foreach($users as $account){
+            $user_roles = $account->roles;
+            $user_roles->first()->name == 'Administrator' ? $admin++ : ($user_roles->first()->name == 'Instructor' ? $instructor++ : $parent++);
+        }
+        return view('administrator.dashboard', compact('user', 'allAnnouncement', 'admin', 'parent', 'instructor'));
     }
 
 

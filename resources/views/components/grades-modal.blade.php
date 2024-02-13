@@ -1724,7 +1724,7 @@
         }
 
         //uploading grade and score
-        $('#uploadGradeScoreScore').click(function(){
+        $('#uploadGradeScore').click(function(){
             var formData = new FormData($('#uploadForm')[0]);
             formData.append('score_type', $('#score_type').val());
             formData.append('score_term', $('#score_term').val());
@@ -1771,7 +1771,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                     }else{
@@ -1829,7 +1829,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#datatable").html('');
@@ -1896,7 +1896,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#exams_datatable").html('');
@@ -1965,7 +1965,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#quizzes_datatable").html('');
@@ -2361,7 +2361,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#datatable").html('')
@@ -2427,7 +2427,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#exams_datatable").html('')
@@ -2495,7 +2495,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#quizzes_datatable").html('')
@@ -2563,7 +2563,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#assignment_datatable").html('')
@@ -2631,7 +2631,7 @@
                             title: 'Info',
                             text: response.message,
                             icon: "info",
-                            timer: 1000,
+                            timer: 1500,
                             confirmButtonColor: "#3085d6",
                         });
                         $("#seatwork_datatable").html('')
@@ -2674,13 +2674,12 @@
                             'X-CSRF-TOKEN': csrfToken
                         },
                         success: function(response) {
-                            console.log(response)
                             if(response.success) {
                                 Swal.fire({
                                     title: 'Info',
                                     text: response.message,
                                     icon: "info",
-                                    timer: 1000,
+                                    timer: 1500,
                                     confirmButtonColor: "#3085d6",
                                 });
                                 $("#datatable").html('')
@@ -2723,7 +2722,7 @@
                                     title: 'Info',
                                     text: response.message,
                                     icon: "info",
-                                    timer: 1000,
+                                    timer: 1500,
                                     confirmButtonColor: "#3085d6",
                                 });
                                 $("#exams_datatable").html('')
@@ -2766,7 +2765,7 @@
                                     title: 'Info',
                                     text: response.message,
                                     icon: "info",
-                                    timer: 1000,
+                                    timer: 1500,
                                     confirmButtonColor: "#3085d6",
                                 });
                                 $("#quizzes_datatable").html('')
@@ -2809,7 +2808,7 @@
                                     title: 'Info',
                                     text: response.message,
                                     icon: "info",
-                                    timer: 1000,
+                                    timer: 1500,
                                     confirmButtonColor: "#3085d6",
                                 });
                                 $("#assignment_datatable").html('')
@@ -2852,7 +2851,7 @@
                                     title: 'Info',
                                     text: response.message,
                                     icon: "info",
-                                    timer: 1000,
+                                    timer: 1500,
                                     confirmButtonColor: "#3085d6",
                                 });
                                 $("#seatwork_datatable").html('')

@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/seatwork-update', [GradesAndScoresController::class, 'update_seatwork'])->name('instructor.seatwork.update');
         Route::delete('/seatwork', [GradesAndScoresController::class, 'delete_seatwork'])->name('instructor.seatwork.delete');
         Route::get('/seatworks-display', [GradesAndScoresController::class, 'display_seatworks'])->name('instructor.seatworks.display');
-        Route::post('/grades&score/upload', [GradesAndScoresController::class, 'upload'])->name('instructor.grades_score.upload');
+        Route::post('/grades_score/upload', [GradesAndScoresController::class, 'upload'])->name('instructor.grades_score.upload');
     });
 
     Route::middleware(['role:Parent'])->prefix('parent')->group(function () {

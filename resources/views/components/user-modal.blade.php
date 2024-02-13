@@ -553,7 +553,6 @@
                 success: function(response) {
                     response.forEach(user => {
                         user.roles.forEach(role => {
-                            console.log(role)
 
                         const row = document.createElement('tr');
 
