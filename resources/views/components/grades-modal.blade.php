@@ -2004,12 +2004,6 @@
                     response.forEach(grade => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>
-                                <div class="form-check custom-checkbox checkbox-success check-lg me-3">
-                                    <input type="checkbox" class="form-check-input" id="customCheckBox${grade.id}" required="">
-                                    <label class="form-check-label" for="customCheckBox${grade.id}"></label>
-                                </div>
-                            </td>
                             <td>${grade.date}</td>
                             <td>${grade.student_id}</td>
                             <td>${grade.name}</td>

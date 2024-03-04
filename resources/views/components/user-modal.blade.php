@@ -196,12 +196,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
 <div class="modal fade bd-example-modal-lg user_modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

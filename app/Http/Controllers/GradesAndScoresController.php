@@ -851,368 +851,20 @@ class GradesAndScoresController extends Controller
                     }
                 }
                 if($request->score_type == 'Grade'){
-                    $row = 7;
-                    $keys = ['Midterm' => 'X', 'Final' => 'AV'];
-                    if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
-                        $key = $keys[$request->score_term];
-                        $data = array();
-                        while($activeSheet->getCell('A'.$row)->getValue() != null){
-                            $fname = $activeSheet->getCell('C'.$row)->getValue();
-                            $lname = $activeSheet->getCell('B'.$row)->getValue();
-                            $name = $fname . ' ' . $lname;
-                            $grade = $activeSheet->getCell($key.$row)->getCalculatedValue();
-                            if(gettype($grade) == 'string'){
-                                if($grade == '#VALUE!'){
-                                    $grade = null;
-                                    $remarks = 'DROPPED';
-                                }else{
-                                    $grade = null;
-                                }
-                            }else if(gettype($grade) == 'double' || gettype($grade) == 'integer'){
-                                $grade = round($grade);
-                            }else{
-                                $grade = null;
-                            }
-
-                            $data = ['student_name' => $name, 'grade' => $grade, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'remarks' => ''];
-                            $this->storeGrade($data);
-                            $row++;
-                        }
-                    }else{
-                        $key = ['X', 'AV'];
-                        $term = ['Midterm', 'Final'];
-                        $data = array();
-                        for($i=0; $i<2; $i++){
-                            $row = 7;
-                            while($activeSheet->getCell('A'.$row)->getValue() != null){
-                                $fname = $activeSheet->getCell('C'.$row)->getValue();
-                                $lname = $activeSheet->getCell('B'.$row)->getValue();
-                                $name = $fname . ' ' . $lname;
-                                $grade = $activeSheet->getCell($key[$i].$row)->getCalculatedValue();
-                                if(gettype($grade) == 'string'){
-                                    if($grade == '#VALUE!'){
-                                        $grade = null;
-                                        $remarks = 'DROPPED';
-                                    }else{
-                                        $grade = null;
-                                    }
-                                }else if(gettype($grade) == 'double' || gettype($grade) == 'integer'){
-                                    $grade = round($grade);
-                                }else{
-                                    $grade = null;
-                                }
-    
-                                $data = ['student_name' => $name, 'grade' => $grade, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'remarks' => ''];
-                                $this->storeGrade($data);
-                                $row++;
-                            }
-                        }
-                    }
+                    $this->addGrade($request, $lastRow, $activeSheet);
                 }else if($request->score_type == 'Exam'){
-                    $row = 7;
-                    $keys = ['Midterm' => 'V', 'Final' => 'AR'];
-                    if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
-                        $key = $keys[$request->score_term];
-                        $data = array();
-                        $no_of_item = $activeSheet->getCell($key.$lastRow)->getCalculatedValue();
-                        while($activeSheet->getCell('A'.$row)->getValue() != null){
-                            // while($activeSheet->getCell($key.'6')->getValue() != null){
-                            //     if($activeSheet->getCell($col.'6')->getValue() == 'ME'){
-                            //         break;
-                            //     }
-                            //     $key++;
-                            // }
-                            $score_percent = '';
-                            $fname = $activeSheet->getCell('C'.$row)->getValue();
-                            $lname = $activeSheet->getCell('B'.$row)->getValue();
-                            $name = $fname . ' ' . $lname;
-                            $exam = $activeSheet->getCell($key.$row)->getCalculatedValue();
-                            if(gettype($exam) == 'string'){
-                                if($exam == '#VALUE!'){
-                                    $exam = null;
-                                    $remarks = 'DROPPED';
-                                }else{
-                                    $exam = null;
-                                }
-                            }else if(gettype($exam) == 'double' || gettype($exam) == 'integer'){
-                                $exam = round($exam);
-                                $score_percent = ($exam / $no_of_item) * 100;
-                            }else{
-                                $exam = null;
-                            }
-                            $data = ['student_name' => $name, 'exam' => $exam, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'exam_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                            $this->storeExam($data);
-                            $row++;
-                        }
-                    }else{
-                        $key = ['X', 'AV'];
-                        $term = ['Midterm', 'Final'];
-                        $data = array();
-                        for($i=0; $i<2; $i++){
-                            $row = 7;
-                            $no_of_item = $activeSheet->getCell($key[$i].$lastRow)->getCalculatedValue();
-                            while($activeSheet->getCell('A'.$row)->getValue() != null){
-                                $score_percent = '';
-                                $fname = $activeSheet->getCell('C'.$row)->getValue();
-                                $lname = $activeSheet->getCell('B'.$row)->getValue();
-                                $name = $fname . ' ' . $lname;
-                                $exam = $activeSheet->getCell($key[$i].$row)->getCalculatedValue();
-                                if(gettype($exam) == 'string'){
-                                    if($exam == '#VALUE!'){
-                                        $exam = null;
-                                        $remarks = 'DROPPED';
-                                    }else{
-                                        $exam = null;
-                                    }
-                                }else if(gettype($exam) == 'double' || gettype($exam) == 'integer'){
-                                    $exam = round($exam);
-                                    $score_percent = ($exam / $no_of_item) * 100;
-                                }else{
-                                    $exam = null;
-                                }
-    
-                                $data = ['student_name' => $name, 'exam' => $exam, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'exam_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                $this->storeExam($data);
-                                $row++;
-                            }
-                        }
-                    }
+                    $this->addExam($request, $lastRow, $activeSheet);
                 }else if($request->score_type == 'Quiz'){
-                    $row = 7;
-                    $keys = ['Midterm' => 'D', 'Final' => 'Y'];
-                    if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
-                        $data = array();
-                        while($activeSheet->getCell('A'.$row)->getValue() != null){
-                            $score_percent = '';
-                            $fname = $activeSheet->getCell('C'.$row)->getValue();
-                            $lname = $activeSheet->getCell('B'.$row)->getValue();
-                            $name = $fname . ' ' . $lname;
-                            $col = $keys[$request->score_term];
-                            while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
-                                $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                if(gettype($quiz) == 'string'){
-                                    if($quiz == '#VALUE!'){
-                                        $quiz = null;
-                                    }else{
-                                        $quiz = null;
-                                    }
-                                }else if(gettype($quiz) == 'double' || gettype($quiz) == 'integer'){
-                                    $quiz = round($quiz);
-                                    $score_percent = ($quiz / $no_of_item) * 100;
-                                }else{
-                                    $quiz = null;
-                                }
-                                $quiz_no = $activeSheet->getCell($col.'6')->getValue();
-                                $quiz_no = substr($quiz_no, 1);
-                                $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                
-                                $this->storeQuiz($data);
-                                $col++;
-                            }
-                            $row++;
-                        }
-                    }else{
-                        $key = ['D', 'Y'];
-                        $term = ['Midterm', 'Final'];
-                        $data = array();
-                        for($i=0; $i<2; $i++){
-                            $row = 7;
-                            while($activeSheet->getCell('A'.$row)->getValue() != null){
-                                $score_percent = '';
-                                $fname = $activeSheet->getCell('C'.$row)->getValue();
-                                $lname = $activeSheet->getCell('B'.$row)->getValue();
-                                $name = $fname . ' ' . $lname;
-                                $col = $key[$i];
-                                $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
-                                    $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                    if(gettype($quiz) == 'string'){
-                                        if($quiz == '#VALUE!'){
-                                            $quiz = null;
-                                        }else{
-                                            $quiz = null;
-                                        }
-                                    }else if(gettype($quiz) == 'double' || gettype($quiz) == 'integer'){
-                                        $quiz = round($quiz);
-                                        $score_percent = ($quiz / $no_of_item) * 100;
-                                    }else{
-                                        $quiz = null;
-                                    }
-                                    $quiz_no = $activeSheet->getCell($col.'6')->getValue();
-                                    $quiz_no = substr($quiz_no, 1);
-                                    $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                    $this->storeQuiz($data);
-                                    $col++;
-                                }
-                                $row++;
-                            }
-                        }
-                    }
+                    $this->addQuiz($request, $lastRow, $activeSheet);
                 }else if($request->score_type == 'Assignment'){
-                    $row = 7;
-                    $keys = ['Midterm' => 'G', 'Final' => 'AB'];
-                    if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
-                        $data = array();
-                        while($activeSheet->getCell('A'.$row)->getValue() != null){
-                            $score_percent = '';
-                            $fname = $activeSheet->getCell('C'.$row)->getValue();
-                            $lname = $activeSheet->getCell('B'.$row)->getValue();
-                            $name = $fname . ' ' . $lname;
-                            $col = $keys[$request->score_term];
-                            while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                                if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
-                                    $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                    $assignment = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                    if(gettype($assignment) == 'string'){
-                                        if($assignment == '#VALUE!'){
-                                            $assignment = null;
-                                        }else{
-                                            $assignment = null;
-                                        }
-                                    }else if(gettype($assignment) == 'double' || gettype($assignment) == 'integer'){
-                                        $assignment = round($assignment);
-                                        $score_percent = ($assignment / $no_of_item) * 100;
-                                    }else{
-                                        $assignment = null;
-                                    }
-                                    $assignment_no = $activeSheet->getCell($col.'6')->getValue();
-                                    $assignment_no = substr($assignment_no, 2);
-                                    $data = ['student_name' => $name, 'score' => $assignment, 'assignment_no' => $assignment_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'assignment_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                    
-                                    $this->storeAssignment($data);
-                                }
-                                $col++;
-                            }
-                            $row++;
-                        }
-                    }else{
-                        $key = ['G', 'AB'];
-                        $term = ['Midterm', 'Final'];
-                        $data = array();
-                        for($i=0; $i<2; $i++){
-                            $row = 7;
-                            while($activeSheet->getCell('A'.$row)->getValue() != null){
-                                $score_percent = '';
-                                $fname = $activeSheet->getCell('C'.$row)->getValue();
-                                $lname = $activeSheet->getCell('B'.$row)->getValue();
-                                $name = $fname . ' ' . $lname;
-                                $col = $key[$i];
-                                while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
-                                        $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                        $assignment = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                        if(gettype($assignment) == 'string'){
-                                            if($assignment == '#VALUE!'){
-                                                $assignment = null;
-                                            }else{
-                                                $assignment = null;
-                                            }
-                                        }else if(gettype($assignment) == 'double' || gettype($assignment) == 'integer'){
-                                            $assignment = round($assignment);
-                                            $score_percent = ($assignment / $no_of_item) * 100;
-                                        }else{
-                                            $assignment = null;
-                                        }
-                                        $assignment_no = $activeSheet->getCell($col.'6')->getValue();
-                                        $assignment_no = substr($assignment_no, 2);
-                                        $data = ['student_name' => $name, 'score' => $assignment, 'assignment_no' => $assignment_no, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'assignment_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                        $this->storeAssignment($data);
-                                    }
-                                    $col++;
-                                }
-                                $row++;
-                            }
-                        }
-                    }
+                    $this->addAssignment($request, $lastRow, $activeSheet);
                 }else if($request->score_type == 'Seatwork'){
-                    $row = 7;
-                    $keys = ['Midterm' => 'O', 'Final' => 'AG'];
-                    if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
-                        $data = array();
-                        while($activeSheet->getCell('A'.$row)->getValue() != null){
-                            $score_percent = '';
-                            $fname = $activeSheet->getCell('C'.$row)->getValue();
-                            $lname = $activeSheet->getCell('B'.$row)->getValue();
-                            $name = $fname . ' ' . $lname;
-                            $col = $keys[$request->score_term];
-                            while($activeSheet->getCell($col.'6')->getValue() != 'SWG'){
-                                if(stristr($activeSheet->getCell($col.'6')->getValue(), 'SW') !== false){
-                                    $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                    $seatwork = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                    if(gettype($seatwork) == 'string'){
-                                        if($seatwork == '#VALUE!'){
-                                            $seatwork = null;
-                                        }else{
-                                            $seatwork = null;
-                                        }
-                                    }else if(gettype($seatwork) == 'double' || gettype($seatwork) == 'integer'){
-                                        $seatwork = round($seatwork);
-                                        $score_percent = ($seatwork / $no_of_item) * 100;
-                                    }else{
-                                        $seatwork = null;
-                                    }
-                                    $seatwork_no = $activeSheet->getCell($col.'6')->getValue();
-                                    if(stristr($seatwork_no, 'OSW') !== false){
-                                        $seatwork_no = 'Online Seatwork ' . substr($seatwork_no, 3);
-                                    }else{
-                                        $seatwork_no = 'Seatwork ' . substr($seatwork_no, 2);
-                                    }
-                                    $data = ['student_name' => $name, 'score' => $seatwork, 'seatwork_no' => $seatwork_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'seatwork_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                    $this->storeSeatwork($data);
-                                }
-                                $col++;
-                            }
-                            $row++;
-                        }
-                    }else{
-                        $key = ['G', 'AB'];
-                        $term = ['Midterm', 'Final'];
-                        $data = array();
-                        for($i=0; $i<2; $i++){
-                            $row = 7;
-                            while($activeSheet->getCell('A'.$row)->getValue() != null){
-                                $score_percent = '';
-                                $fname = $activeSheet->getCell('C'.$row)->getValue();
-                                $lname = $activeSheet->getCell('B'.$row)->getValue();
-                                $name = $fname . ' ' . $lname;
-                                $col = $key[$i];
-                                while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
-                                        $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                                        $seatwork = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                                        if(gettype($seatwork) == 'string'){
-                                            if($seatwork == '#VALUE!'){
-                                                $seatwork = null;
-                                            }else{
-                                                $seatwork = null;
-                                            }
-                                        }else if(gettype($seatwork) == 'double' || gettype($seatwork) == 'integer'){
-                                            $seatwork = round($seatwork);
-                                            $score_percent = ($seatwork / $no_of_item) * 100;
-                                        }else{
-                                            $seatwork = null;
-                                        }
-                                        $seatwork_no = $activeSheet->getCell($col.'6')->getValue();
-                                        if(stristr($seatwork_no, 'OSW') !== false){
-                                            $seatwork_no = 'Online Seatwork ' . substr($seatwork_no, 3);
-                                        }else{
-                                            $seatwork_no = 'Seatwork ' . substr($seatwork_no, 2);
-                                        }
-                                        $data = ['student_name' => $name, 'score' => $seatwork, 'seatwork_no' => $seatwork_no, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'seatwork_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                                        $this->storeSeatwork($data);
-                                    }
-                                    $col++;
-                                }
-                                $row++;
-                            }
-                        }
-                    }
+                    $this->addSeatwork($request, $lastRow, $activeSheet);
                 }else{
                     $this->uploadAll($request, $lastRow, $activeSheet);
                 }
 
-                return response()->json(['message' => 'Student Grade Uploaded Successfully', 'success' => true]);
+                return response()->json(['message' => 'Student Score/s Uploaded Successfully', 'success' => true]);
             } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
                 return response()->json(['success' => false, 'message' => 'Error reading the file: ' . $e->getMessage()]);
             }
@@ -1222,12 +874,26 @@ class GradesAndScoresController extends Controller
     }
 
     private function uploadAll($request, $lastRow, $activeSheet){
-        //grade
+        $this->addGrade($request, $lastRow, $activeSheet);
+        $this->addExam($request, $lastRow, $activeSheet);
+        $this->addQuiz($request, $lastRow, $activeSheet);
+        $this->addAssignment($request, $lastRow, $activeSheet);
+        $this->addSeatwork($request, $lastRow, $activeSheet);
+    }
+
+    private function addGrade($request, $lastRow, $activeSheet){
+        $data = array();
         $row = 7;
         $keys = ['Midterm' => 'X', 'Final' => 'AV'];
+        $cells = ['Midterm' => 'MG', 'Final' => 'ADJFG'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $key = $keys[$request->score_term];
-            $data = array();
+            while($activeSheet->getCell($key.'6')->getValue() != null){
+                if($activeSheet->getCell($key.'6')->getValue() == $cells[$request->score_term]){
+                    break;
+                }
+                $key++;
+            }
             while($activeSheet->getCell('A'.$row)->getValue() != null){
                 $fname = $activeSheet->getCell('C'.$row)->getValue();
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
@@ -1253,14 +919,23 @@ class GradesAndScoresController extends Controller
         }else{
             $key = ['X', 'AV'];
             $term = ['Midterm', 'Final'];
+            $cells = ['MG', 'ADJFG'];
             $data = array();
+            
             for($i=0; $i<2; $i++){
                 $row = 7;
+                $_key = $key[$i];
+                while($activeSheet->getCell($_key.'6')->getValue() != null){
+                    if($activeSheet->getCell($_key.'6')->getValue() == $cells[$i]){
+                        break;
+                    }
+                    $_key++;
+                } 
                 while($activeSheet->getCell('A'.$row)->getValue() != null){
                     $fname = $activeSheet->getCell('C'.$row)->getValue();
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
-                    $grade = $activeSheet->getCell($key[$i].$row)->getCalculatedValue();
+                    $grade = $activeSheet->getCell($_key.$row)->getCalculatedValue();
                     if(gettype($grade) == 'string'){
                         if($grade == '#VALUE!'){
                             $grade = null;
@@ -1280,22 +955,23 @@ class GradesAndScoresController extends Controller
                 }
             }
         }
+    }
 
-        //exam
-
+    private function addExam($request, $lastRow, $activeSheet){
         $row = 7;
         $keys = ['Midterm' => 'V', 'Final' => 'AR'];
+        $cells = ['Midterm' => 'ME', 'Final' => 'FE'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $key = $keys[$request->score_term];
             $data = array();
+            while($activeSheet->getCell($key.'6')->getValue() != null){
+                if($activeSheet->getCell($key.'6')->getValue() == $cells[$request->score_term]){
+                    break;
+                }
+                $key++;
+            }
             $no_of_item = $activeSheet->getCell($key.$lastRow)->getCalculatedValue();
             while($activeSheet->getCell('A'.$row)->getValue() != null){
-                // while($activeSheet->getCell($key.'6')->getValue() != null){
-                //     if($activeSheet->getCell($col.'6')->getValue() == 'ME'){
-                //         break;
-                //     }
-                //     $key++;
-                // }
                 $score_percent = '';
                 $fname = $activeSheet->getCell('C'.$row)->getValue();
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
@@ -1319,18 +995,26 @@ class GradesAndScoresController extends Controller
                 $row++;
             }
         }else{
-            $key = ['X', 'AV'];
+            $key = ['V', 'AR'];
             $term = ['Midterm', 'Final'];
+            $cells = ['ME', 'FE'];
             $data = array();
             for($i=0; $i<2; $i++){
                 $row = 7;
-                $no_of_item = $activeSheet->getCell($key[$i].$lastRow)->getCalculatedValue();
+                $_key = $key[$i];
+                while($activeSheet->getCell($_key.'6')->getValue() != null){
+                    if($activeSheet->getCell($_key.'6')->getValue() == $cells[$i]){
+                        break;
+                    }
+                    $_key++;
+                }
+                $no_of_item = $activeSheet->getCell($_key.$lastRow)->getCalculatedValue();
                 while($activeSheet->getCell('A'.$row)->getValue() != null){
                     $score_percent = '';
                     $fname = $activeSheet->getCell('C'.$row)->getValue();
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
-                    $exam = $activeSheet->getCell($key[$i].$row)->getCalculatedValue();
+                    $exam = $activeSheet->getCell($_key.$row)->getCalculatedValue();
                     if(gettype($exam) == 'string'){
                         if($exam == '#VALUE!'){
                             $exam = null;
@@ -1351,56 +1035,70 @@ class GradesAndScoresController extends Controller
                 }
             }
         }
+    }
 
-        //quiz
-
-
+    private function addQuiz($request, $lastRow, $activeSheet){
         $row = 7;
         $keys = ['Midterm' => 'D', 'Final' => 'Y'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $data = array();
+            $key = $keys[$request->score_term];
+            while($activeSheet->getCell($key.'6')->getValue() != null){
+                if($activeSheet->getCell($key.'6')->getValue() == 'Q1'){
+                    break;
+                }
+                $key++;
+            }
             while($activeSheet->getCell('A'.$row)->getValue() != null){
+                $col = $key;
                 $score_percent = '';
                 $fname = $activeSheet->getCell('C'.$row)->getValue();
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
                 $name = $fname . ' ' . $lname;
-                $col = $keys[$request->score_term];
                 while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
-                    $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                    $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
-                    if(gettype($quiz) == 'string'){
-                        if($quiz == '#VALUE!'){
-                            $quiz = null;
+                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'Q') !== false){
+                        $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
+                        $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
+                        if(gettype($quiz) == 'string'){
+                            if($quiz == '#VALUE!'){
+                                $quiz = null;
+                            }else{
+                                $quiz = null;
+                            }
+                        }else if(gettype($quiz) == 'double' || gettype($quiz) == 'integer'){
+                            $quiz = round($quiz);
+                            $score_percent = ($quiz / $no_of_item) * 100;
                         }else{
                             $quiz = null;
                         }
-                    }else if(gettype($quiz) == 'double' || gettype($quiz) == 'integer'){
-                        $quiz = round($quiz);
-                        $score_percent = ($quiz / $no_of_item) * 100;
-                    }else{
-                        $quiz = null;
+                        $quiz_no = $activeSheet->getCell($col.'6')->getValue();
+                        $quiz_no = substr($quiz_no, 1);
+                        $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
+                        $this->storeQuiz($data);
                     }
-                    $quiz_no = $activeSheet->getCell($col.'6')->getValue();
-                    $quiz_no = substr($quiz_no, 1);
-                    $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                    
-                    $this->storeQuiz($data);
                     $col++;
                 }
                 $row++;
             }
         }else{
-            $key = ['D', 'Y'];
+            $keys = ['D', 'Y'];
             $term = ['Midterm', 'Final'];
             $data = array();
             for($i=0; $i<2; $i++){
                 $row = 7;
+                $key = $keys[$i];
+                while($activeSheet->getCell($key.'6')->getValue() != null){
+                    if($activeSheet->getCell($key.'6')->getValue() == 'Q1'){
+                        break;
+                    }
+                    $key++;
+                }
                 while($activeSheet->getCell('A'.$row)->getValue() != null){
+                    $col = $key;
                     $score_percent = '';
                     $fname = $activeSheet->getCell('C'.$row)->getValue();
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
-                    $col = $key[$i];
                     $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
                     while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
                         $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
@@ -1426,10 +1124,9 @@ class GradesAndScoresController extends Controller
                 }
             }
         }
+    }
 
-        //assignment
-
-
+    private function addAssignment($request, $lastRow, $activeSheet){
         $row = 7;
         $keys = ['Midterm' => 'G', 'Final' => 'AB'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
@@ -1505,10 +1202,9 @@ class GradesAndScoresController extends Controller
                 }
             }
         }
+    }
 
-        //seatwork
-
-
+    private function addSeatwork($request, $lastRow, $activeSheet){
         $row = 7;
         $keys = ['Midterm' => 'O', 'Final' => 'AG'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
@@ -1591,6 +1287,6 @@ class GradesAndScoresController extends Controller
                 }
             }
         }
-
     }
+
 }

@@ -1005,7 +1005,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
     <script src="{{ asset('assets/vendor/global/global.min.js') }}"></script>
-	<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 	<script src="{{ asset('assets/js/deznav-init.js') }}"></script>
 	<script src="{{ asset('assets/js/demo.js') }}"></script>
@@ -1013,6 +1012,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
+	<script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <script>
 
     const redirect = (url) => {
