@@ -69,8 +69,8 @@
                               <thead style="position: sticky; top: 0; ">
                                  <tr>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Student ID</strong></th>
-                                    <th><strong>Student Name</strong></th>
+                                    <th><strong>ID</strong></th>
+                                    <th><strong>Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Grade</strong></th>
@@ -151,12 +151,12 @@
                               <thead style="position: sticky; top: 0;">
                                  <tr>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Student ID</strong></th>
-                                    <th><strong>Student Name</strong></th>
+                                    <th><strong>ID</strong></th>
+                                    <th><strong>Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Score</strong></th>
-                                    <th><strong>Exam Item</strong></th>
+                                    <th><strong>Item</strong></th>
                                     <th><strong>%</strong></th>
                                     <th><strong>Actions</strong></th>
                                  </tr>
@@ -211,9 +211,9 @@
                               <thead style="position: sticky; top: 0;">
                                  <tr>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Student ID</strong></th>
+                                    <th><strong>ID</strong></th>
                                     <th><strong>Quiz No.</strong></th>
-                                    <th><strong>Student Name</strong></th>
+                                    <th><strong>Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Score</strong></th>
@@ -274,13 +274,13 @@
                               <thead style="position: sticky; top: 0;">
                                  <tr>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Student ID</strong></th>
-                                    <th><strong>Seatwork No.</strong></th>
-                                    <th><strong>Student Name</strong></th>
+                                    <th><strong>ID</strong></th>
+                                    <th><strong>No.</strong></th>
+                                    <th><strong>Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Score</strong></th>
-                                    <th><strong>Seatwork Item</strong></th>
+                                    <th><strong>Item</strong></th>
                                     <th><strong>%</strong></th>
                                     <th><strong>Actions</strong></th>
                                  </tr>
@@ -336,13 +336,13 @@
                               <thead style="position: sticky; top: 0;">
                                  <tr>
                                     <th><strong>Date</strong></th>
-                                    <th><strong>Student ID</strong></th>
-                                    <th><strong>Assignment No.</strong></th>
-                                    <th><strong>Student Name</strong></th>
+                                    <th><strong>ID</strong></th>
+                                    <th><strong>No.</strong></th>
+                                    <th><strong>Name</strong></th>
                                     <th><strong>Semester</strong></th>
                                     <th><strong>Term</strong></th>
                                     <th><strong>Score</strong></th>
-                                    <th><strong>Assignment Item</strong></th>
+                                    <th><strong>Item</strong></th>
                                     <th><strong>%</strong></th>
                                     <th><strong>Actions</strong></th>
                                  </tr>

@@ -888,8 +888,8 @@ class GradesAndScoresController extends Controller
         $cells = ['Midterm' => 'MG', 'Final' => 'ADJFG'];
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $key = $keys[$request->score_term];
-            while($activeSheet->getCell($key.'6')->getValue() != null){
-                if($activeSheet->getCell($key.'6')->getValue() == $cells[$request->score_term]){
+            while($activeSheet->getCell($key.'4')->getValue() != null){
+                if($activeSheet->getCell($key.'4')->getValue() == $cells[$request->score_term]){
                     break;
                 }
                 $key++;
@@ -925,8 +925,8 @@ class GradesAndScoresController extends Controller
             for($i=0; $i<2; $i++){
                 $row = 7;
                 $_key = $key[$i];
-                while($activeSheet->getCell($_key.'6')->getValue() != null){
-                    if($activeSheet->getCell($_key.'6')->getValue() == $cells[$i]){
+                while($activeSheet->getCell($_key.'4')->getValue() != null){
+                    if($activeSheet->getCell($_key.'4')->getValue() == $cells[$i]){
                         break;
                     }
                     $_key++;
@@ -964,8 +964,8 @@ class GradesAndScoresController extends Controller
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $key = $keys[$request->score_term];
             $data = array();
-            while($activeSheet->getCell($key.'6')->getValue() != null){
-                if($activeSheet->getCell($key.'6')->getValue() == $cells[$request->score_term]){
+            while($activeSheet->getCell($key.'4')->getValue() != null){
+                if($activeSheet->getCell($key.'4')->getValue() == $cells[$request->score_term]){
                     break;
                 }
                 $key++;
@@ -1002,8 +1002,8 @@ class GradesAndScoresController extends Controller
             for($i=0; $i<2; $i++){
                 $row = 7;
                 $_key = $key[$i];
-                while($activeSheet->getCell($_key.'6')->getValue() != null){
-                    if($activeSheet->getCell($_key.'6')->getValue() == $cells[$i]){
+                while($activeSheet->getCell($_key.'4')->getValue() != null){
+                    if($activeSheet->getCell($_key.'4')->getValue() == $cells[$i]){
                         break;
                     }
                     $_key++;
@@ -1043,8 +1043,8 @@ class GradesAndScoresController extends Controller
         if($request->score_term == 'Midterm' || $request->score_term == 'Final'){
             $data = array();
             $key = $keys[$request->score_term];
-            while($activeSheet->getCell($key.'6')->getValue() != null){
-                if($activeSheet->getCell($key.'6')->getValue() == 'Q1'){
+            while($activeSheet->getCell($key.'4')->getValue() != null){
+                if($activeSheet->getCell($key.'4')->getValue() == 'Q1'){
                     break;
                 }
                 $key++;
@@ -1055,8 +1055,8 @@ class GradesAndScoresController extends Controller
                 $fname = $activeSheet->getCell('C'.$row)->getValue();
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
                 $name = $fname . ' ' . $lname;
-                while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
-                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'Q') !== false){
+                while($activeSheet->getCell($col.'4')->getValue() != 'QG'){
+                    if(stristr($activeSheet->getCell($col.'4')->getValue(), 'Q') !== false){
                         $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
                         $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
                         if(gettype($quiz) == 'string'){
@@ -1071,7 +1071,7 @@ class GradesAndScoresController extends Controller
                         }else{
                             $quiz = null;
                         }
-                        $quiz_no = $activeSheet->getCell($col.'6')->getValue();
+                        $quiz_no = $activeSheet->getCell($col.'4')->getValue();
                         $quiz_no = substr($quiz_no, 1);
                         $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
                         $this->storeQuiz($data);
@@ -1087,8 +1087,8 @@ class GradesAndScoresController extends Controller
             for($i=0; $i<2; $i++){
                 $row = 7;
                 $key = $keys[$i];
-                while($activeSheet->getCell($key.'6')->getValue() != null){
-                    if($activeSheet->getCell($key.'6')->getValue() == 'Q1'){
+                while($activeSheet->getCell($key.'4')->getValue() != null){
+                    if($activeSheet->getCell($key.'4')->getValue() == 'Q1'){
                         break;
                     }
                     $key++;
@@ -1100,7 +1100,7 @@ class GradesAndScoresController extends Controller
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
                     $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                    while($activeSheet->getCell($col.'6')->getValue() != 'QG'){
+                    while($activeSheet->getCell($col.'4')->getValue() != 'QG'){
                         $quiz = $activeSheet->getCell($col.$row)->getCalculatedValue();
                         if(gettype($quiz) == 'string'){
                             if($quiz == '#VALUE!'){
@@ -1114,7 +1114,7 @@ class GradesAndScoresController extends Controller
                         }else{
                             $quiz = null;
                         }
-                        $quiz_no = $activeSheet->getCell($col.'6')->getValue();
+                        $quiz_no = $activeSheet->getCell($col.'4')->getValue();
                         $quiz_no = substr($quiz_no, 1);
                         $data = ['student_name' => $name, 'score' => $quiz, 'quiz_no' => $quiz_no, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'quiz_item' => $no_of_item, 'score_in_percent' => $score_percent];
                         $this->storeQuiz($data);
@@ -1137,9 +1137,9 @@ class GradesAndScoresController extends Controller
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
                 $name = $fname . ' ' . $lname;
                 $col = $keys[$request->score_term];
-                while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
-                        $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
+                while($activeSheet->getCell($col.'4')->getValue() != 'ASG'){
+                    if(stristr($activeSheet->getCell($col.'4')->getValue(), 'AS') !== false){
+                        $no_of_item = $activeSheet->getCell($col.$lastRow)->getCalculatedValue();
                         $assignment = $activeSheet->getCell($col.$row)->getCalculatedValue();
                         if(gettype($assignment) == 'string'){
                             if($assignment == '#VALUE!'){
@@ -1153,7 +1153,7 @@ class GradesAndScoresController extends Controller
                         }else{
                             $assignment = null;
                         }
-                        $assignment_no = $activeSheet->getCell($col.'6')->getValue();
+                        $assignment_no = $activeSheet->getCell($col.'4')->getCalculatedValue();
                         $assignment_no = substr($assignment_no, 2);
                         $data = ['student_name' => $name, 'score' => $assignment, 'assignment_no' => $assignment_no, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'assignment_item' => $no_of_item, 'score_in_percent' => $score_percent];
                         
@@ -1175,10 +1175,10 @@ class GradesAndScoresController extends Controller
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
                     $col = $key[$i];
-                    while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                        if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
+                    while($activeSheet->getCell($col.'4')->getValue() != 'ASG'){
+                        if(stristr($activeSheet->getCell($col.'4')->getValue(), 'AS') !== false){
                             $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
-                            $assignment = $activeSheet->getCell($col.$row)->getCalculatedValue();
+                            $assignment = $activeSheet->getCell($col.$row)->getValue();
                             if(gettype($assignment) == 'string'){
                                 if($assignment == '#VALUE!'){
                                     $assignment = null;
@@ -1191,10 +1191,11 @@ class GradesAndScoresController extends Controller
                             }else{
                                 $assignment = null;
                             }
-                            $assignment_no = $activeSheet->getCell($col.'6')->getValue();
+                            $assignment_no = $activeSheet->getCell($col.'4')->getValue();
                             $assignment_no = substr($assignment_no, 2);
                             $data = ['student_name' => $name, 'score' => $assignment, 'assignment_no' => $assignment_no, 'term' => $term[$i], 'semester' => $request->score_semester, 'date' => NOW(), 'assignment_item' => $no_of_item, 'score_in_percent' => $score_percent];
-                            $this->storeAssignment($data);
+                            
+                            $this->storeAssignment($data);  
                         }
                         $col++;
                     }
@@ -1215,8 +1216,8 @@ class GradesAndScoresController extends Controller
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
                 $name = $fname . ' ' . $lname;
                 $col = $keys[$request->score_term];
-                while($activeSheet->getCell($col.'6')->getValue() != 'SWG'){
-                    if(stristr($activeSheet->getCell($col.'6')->getValue(), 'SW') !== false){
+                while($activeSheet->getCell($col.'4')->getValue() != 'SWG'){
+                    if(stristr($activeSheet->getCell($col.'4')->getValue(), 'SW') !== false){
                         $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
                         $seatwork = $activeSheet->getCell($col.$row)->getCalculatedValue();
                         if(gettype($seatwork) == 'string'){
@@ -1231,7 +1232,7 @@ class GradesAndScoresController extends Controller
                         }else{
                             $seatwork = null;
                         }
-                        $seatwork_no = $activeSheet->getCell($col.'6')->getValue();
+                        $seatwork_no = $activeSheet->getCell($col.'4')->getValue();
                         if(stristr($seatwork_no, 'OSW') !== false){
                             $seatwork_no = 'Online Seatwork ' . substr($seatwork_no, 3);
                         }else{
@@ -1256,8 +1257,8 @@ class GradesAndScoresController extends Controller
                     $lname = $activeSheet->getCell('B'.$row)->getValue();
                     $name = $fname . ' ' . $lname;
                     $col = $key[$i];
-                    while($activeSheet->getCell($col.'6')->getValue() != 'ASG'){
-                        if(stristr($activeSheet->getCell($col.'6')->getValue(), 'AS') !== false){
+                    while($activeSheet->getCell($col.'4')->getValue() != 'ASG'){
+                        if(stristr($activeSheet->getCell($col.'4')->getValue(), 'AS') !== false){
                             $no_of_item = $activeSheet->getCell($col.$lastRow)->getValue();
                             $seatwork = $activeSheet->getCell($col.$row)->getCalculatedValue();
                             if(gettype($seatwork) == 'string'){
@@ -1272,7 +1273,7 @@ class GradesAndScoresController extends Controller
                             }else{
                                 $seatwork = null;
                             }
-                            $seatwork_no = $activeSheet->getCell($col.'6')->getValue();
+                            $seatwork_no = $activeSheet->getCell($col.'4')->getValue();
                             if(stristr($seatwork_no, 'OSW') !== false){
                                 $seatwork_no = 'Online Seatwork ' . substr($seatwork_no, 3);
                             }else{
