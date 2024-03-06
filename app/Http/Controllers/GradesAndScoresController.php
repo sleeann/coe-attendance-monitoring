@@ -833,7 +833,7 @@ class GradesAndScoresController extends Controller
     }
 
     public function upload(Request $request){
-        if ($request->hasFile('upload_grade')) {
+            if ($request->hasFile('upload_grade')) {
             $file = $request->file('upload_grade');
             $tmpFilePath = $file->getRealPath();
             $reader = IOFactory::createReaderForFile($tmpFilePath);
@@ -898,18 +898,15 @@ class GradesAndScoresController extends Controller
                 $fname = $activeSheet->getCell('C'.$row)->getValue();
                 $lname = $activeSheet->getCell('B'.$row)->getValue();
                 $name = $fname . ' ' . $lname;
-                $grade = $activeSheet->getCell($key.$row)->getCalculatedValue();
-                if(gettype($grade) == 'string'){
-                    if($grade == '#VALUE!'){
-                        $grade = null;
-                        $remarks = 'DROPPED';
-                    }else{
-                        $grade = null;
-                    }
+                $grade = $activeSheet->getCell($key.$row)->getOldCalculatedValue();
+                
+                if($grade == null){
+                    $grade = 0;
+                    $remarks = 'DROPPED';
                 }else if(gettype($grade) == 'double' || gettype($grade) == 'integer'){
                     $grade = round($grade);
                 }else{
-                    $grade = null;
+                    $grade = 0;
                 }
 
                 $data = ['student_name' => $name, 'grade' => $grade, 'term' => $request->score_term, 'semester' => $request->score_semester, 'date' => NOW(), 'remarks' => ''];
